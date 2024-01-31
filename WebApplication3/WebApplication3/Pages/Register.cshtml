@@ -1,0 +1,114 @@
+﻿@page
+@model WebApplication3.Pages.RegisterModel
+@{ViewData["Title"] = "Register";}
+@{
+}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+	function validate() {
+		var str = document.getElementById('pwdinput').value;
+		var lbl_pwdchecker = document.querySelector('[data-valmsg-for="RModel.Password"]');
+
+		if (str.length < 15) {
+			lbl_pwdchecker.innerHTML = "Password must be at least 15 characters long";
+			lbl_pwdchecker.style.color = "red";
+		} else if (str.search(/[0-9]/) == -1) {
+			lbl_pwdchecker.innerHTML = "Password must contain at least one number";
+			lbl_pwdchecker.style.color = "red";
+		} else if (str.search(/[a-z]/) == -1) {
+			lbl_pwdchecker.innerHTML = "Password must contain at least one lowercase character";
+			lbl_pwdchecker.style.color = "red";
+		} else if (str.search(/[A-Z]/) == -1) {
+			lbl_pwdchecker.innerHTML = "Password must contain at least one uppercase character";
+			lbl_pwdchecker.style.color = "red";
+		} else if (str.search(/[!#$%^&*()_+{}\[\]:;<>,.?~\\/-]/) == -1) {
+			lbl_pwdchecker.innerHTML = "Password must contain at least one special character";
+			lbl_pwdchecker.style.color = "red";
+		} else {
+			lbl_pwdchecker.innerHTML = "";
+		}
+	}
+
+	function onSubmit(token) {
+		document.getElementById("form").submit();
+	}
+</script>
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div>
+			<h1 class="mb-3">Register </h1>
+
+			<form method="post" id="form" asp-antiforgery="true" enctype="multipart/form-data">
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.FirstName">First Name</label>
+					<input type="Text" asp-for="RModel.FirstName" class="form-control" />
+					<span asp-validaton-for="RModel.FirstName" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.LastName">Last Name</label>
+					<input type="Text" asp-for="RModel.LastName" class="form-control" />
+					<span asp-validaton-for="RModel.LastName" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Gender">Gender</label>
+					<input type="Text" asp-for="RModel.Gender" class="form-control" />
+					<span asp-validaton-for="RModel.Gender" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.NRIC">NRIC</label>
+					<input type="Text" asp-for="RModel.NRIC" class="form-control" />
+					<span asp-validaton-for="RModel.NRIC" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Email">Email Address</label>
+					<input type="Text" asp-for="RModel.Email" class="form-control" />
+					<span asp-validaton-for="RModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Password">Password</label>
+					<input id="pwdinput" onkeyup="validate()" type="text" asp-for="RModel.Password" class="form-control" />
+					<span asp-validation-for="RModel.Password" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+					<input type="Text" asp-for="RModel.ConfirmPassword" class="form-control" />
+					<span asp-validaton-for="RModel.ConfirmPassword" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.DateOfBirth">Date of Birth</label>
+					<input type="date" asp-for="RModel.DateOfBirth" class="form-control" />
+					<span asp-validaton-for="RModel.DateOfBirth" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Resume">Resume</label>
+					<input type="file" accept=".pdf, .docx" asp-for="RModel.Resume" class="form-control" />
+					<span asp-validaton-for="RModel.Resume" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.WhoAmI">Who Am I</label>
+					<input type="Text" asp-for="RModel.WhoAmI" class="form-control" />
+					<span asp-validaton-for="RModel.WhoAmI" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LfK_18pAAAAAPX-JvcG-eWh_XZC1TzRoQVSb9L_" data-callback="onSubmit" data-action="submit">
+						Register
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

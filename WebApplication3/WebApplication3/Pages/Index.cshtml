@@ -1,0 +1,44 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ace Job Agency</h1>
+    <p>自1999年以来为您提供服务</p>
+    <table class="table">
+        <tr>
+            <th>First Name</th>
+            <td>@Model.firstName</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>@Model.lastName</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>@Model.gender</td>
+        </tr>
+        <tr>
+            <th>NRIC</th>
+            <td>@Html.Raw(@Model.nric)</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.emailAddress</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>@Model.dob.ToString()</td>
+        </tr>
+        <tr>
+            <th>Resume File Name</th>
+            <td>@Model.resume</td>
+        </tr>
+        <tr>
+            <th>Who Am I</th>
+            <td>@Html.Raw(Model.whoAmI)</td>
+        </tr>
+    </table>
+</div>
