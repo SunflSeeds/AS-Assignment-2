@@ -45,5 +45,7 @@ namespace WebApplication3.ViewModels
 
         [Required]
         public string WhoAmI { get; set; } = string.Empty;
+
+        public string PasswordHistory { get; set; } = string.Empty;
     }
 }

@@ -13,7 +13,6 @@ namespace WebApplication3.Model
         public string Resume { get; set; } = string.Empty;
         public string WhoAmI { get; set; } = string.Empty;
         public string SessionId { get; set; } = string.Empty;
-        //public string Password1 { get; set; } = string.Empty;
-        //public string Password2 { get; set; } = string.Empty;
+        public string PasswordHistory { get; set; } = string.Empty;
     }
 }

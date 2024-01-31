@@ -2,6 +2,7 @@ using AS_Assignment_2_222256B.Model;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Text.Json;
@@ -67,8 +68,10 @@ namespace WebApplication3.Pages
                     DateOfBirth = RModel.DateOfBirth,
                     Resume = ResumeFileName,
                     WhoAmI = WebUtility.HtmlEncode(RModel.WhoAmI),
+                    PasswordHistory = ""
                 };
-                var auditLogItem = new AuditLog()
+
+				var auditLogItem = new AuditLog()
                 {
                     Email = RModel.Email,
                     Action = "Registration",

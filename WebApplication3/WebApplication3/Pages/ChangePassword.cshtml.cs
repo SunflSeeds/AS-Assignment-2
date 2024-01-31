@@ -27,31 +27,36 @@ namespace AS_Assignment_2_222256B.Pages
 			_logger = logger;
 			_authDbContext = authDbContext;
 		}
-
 		public void OnGet() { }
-
 		public async Task<IActionResult>OnPostAsync()
         {
 			var user = await userManager.GetUserAsync(User);
-			_logger.LogInformation(user.UserName);
-			_logger.LogInformation(user.PasswordHash);
-			var passwordChange = await userManager.ChangePasswordAsync(user, CModel.CurrentPassword, CModel.NewPassword);
-			if (passwordChange.Succeeded)
+			var check1 = userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, CModel.NewPassword);
+			var check2 = userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHistory, CModel.NewPassword);
+			//var newPasswordHash = userManager.PasswordHasher.HashPassword(user, CModel.CurrentPassword);
+			if (check1 == PasswordVerificationResult.Failed && check2 == PasswordVerificationResult.Failed)
 			{
-				var newHash = userManager.PasswordHasher.HashPassword(user, CModel.NewPassword);
-				_logger.LogInformation(newHash);
-				await userManager.UpdateAsync(user);
-				await signInManager.SignInAsync(user, isPersistent: false);
-				_logger.LogInformation(user.PasswordHash);
-				return RedirectToPage("Index");
+				_logger.LogInformation(check1.ToString());
+				_logger.LogInformation(check2.ToString());
+				var passwordChange = await userManager.ChangePasswordAsync(user, CModel.CurrentPassword, CModel.NewPassword);
+				if (passwordChange.Succeeded)
+				{
+					user.PasswordHistory = user.PasswordHash;
+					await userManager.UpdateAsync(user);
+					await signInManager.SignInAsync(user, isPersistent: false);
+					return RedirectToPage("Index");
+				}
+				else
+				{
+					ModelState.AddModelError("", "Your password is incorrect!");
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("", "Your password is incorrect!");
+				ModelState.AddModelError("", "Please do not reuse your last 2 passwords");
 			}
 			return Page();
 		}
-
 		public string PasswordHash { get; set; }
     }
 }
